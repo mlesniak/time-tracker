@@ -1,12 +1,28 @@
 var data = {
     labels: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'],
     datasets: [{
+        label: 'BWL',
         backgroundColor: "#00AA00",
         borderColor: "#eeeeee",
         borderWidth: 1,
         data: [
+            10,
+            20,
+            0
         ]
-    }]
+    },
+    {
+        label: 'Hausarbeit',
+        backgroundColor: "#990000",
+        borderColor: "#eeeeee",
+        borderWidth: 1,
+        data: [
+            30,
+            20,
+            90
+        ]
+    }    
+]
 };
 
 window.onload = function() {
@@ -23,6 +39,14 @@ window.onload = function() {
             legend: {
                 display: false,
             },
+            scales: {
+                xAxes: [{
+                    stacked: true,
+                }],
+                yAxes: [{
+                    stacked: true
+                }]
+            }
         }
     });
 };
@@ -35,7 +59,7 @@ var app = new Vue({
         totalMinutes: 0
     },
     created: function () {
-        this.reloadData();
+        // this.reloadData();
     },
     methods: {
         onSubmit: function() {
