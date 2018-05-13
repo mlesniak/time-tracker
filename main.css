@@ -5,3 +5,7 @@ body {
 .form-row {
     margin-top: 10px;
 }
+
+.large {
+    font-size: 36px;
+}

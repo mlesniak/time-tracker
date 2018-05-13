@@ -18,7 +18,6 @@
         </div>
     </nav>
     
-    
     <div class="container">
         <form>
             <div class="form-row">
@@ -34,13 +33,56 @@
                     <input type="range" class="form-control-range" min="1" max="180" value=15 step="1">
                 </div>
             </div>
-            
             <button type="submit" class="btn btn-primary">Submit</button>
         </form>
-    </div>
-    
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js" integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T" crossorigin="anonymous"></script>
-</body>
-</html>
+        
+        <hr/>
+        
+        <div class="text-center font-weight-bold large">21:30 hours studied!</p>
+            <canvas id="canvas"></canvas> 
+        </div>
+        
+        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js" integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.min.js"></script>
+        
+        <script type="application/javascript">
+            var data = {
+                labels: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'],
+                datasets: [{
+                    backgroundColor: "#00AA00",
+                    borderColor: "#eeeeee",
+                    borderWidth: 1,
+                    data: [
+                    200,
+                    120,
+                    80,
+                    120,
+                    10,
+                    15,
+                    60
+                    ]
+                }]
+            };
+            
+            window.onload = function() {
+                var ctx = document.getElementById('canvas').getContext('2d');
+                window.chart = new Chart(ctx, {
+                    type: 'bar',
+                    data: data,
+                    options: {
+                        responsive: true,
+                        title: {
+                            display: false,
+                            text: 'Your last week'
+                        },
+                        legend: {
+                            display: false,
+                        },
+                    }
+                });
+            };
+        </script>
+    </body>
+    </html>
