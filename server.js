@@ -22,14 +22,12 @@ app.get('/api', (request, response) => {
     response.send(result);
 });
 
-// app.get('/api/full', (request, response) => {
-//     var result = db.prepare(`select 
-//     description,
-//     sum(duration) as duration, 
-//     strftime('%d-%m-%Y',timestamp) as date
-//     from times group by description, date order by date desc limit 7`).all();
-//     response.send(result);
-// });
+app.get('/api/full', (request, response) => {
+    var result = db.prepare(`select 
+    description, duration, timestamp 
+    from times order by timestamp`).all();
+    response.send(result);
+});
 
 app.post('/api', (request, response) => {
     var data = request.body;
