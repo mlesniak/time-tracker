@@ -14,7 +14,7 @@ app.get('/api', (request, response) => {
 
 // Post new data. 
 app.post('/api', (request, response) => {
-    console.log(request.body);
+    save(request.body);
     response.send("OK");
 });
 
@@ -24,3 +24,8 @@ app.listen(port, (err) => {
     }
     console.log(`server is listening on ${port}`)
 });
+
+function save(data) {
+    data.timestamp = new Date();
+    console.log("'Saving' " + JSON.stringify(data));
+}

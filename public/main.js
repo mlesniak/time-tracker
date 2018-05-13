@@ -43,6 +43,15 @@ var app = new Vue({
     methods: {
         onSubmit: function() {
             console.log("Submitting <" + this.description + " / " + this.duration + ">");
+            var self = this;
+            axios.post('/api/', {
+                description: this.description,
+                duration: this.duration
+            }).then(function (response) {
+                console.log('Submitted');
+                self.description = '';
+            });
+            
         }
     }
 })
