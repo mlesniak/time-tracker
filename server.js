@@ -9,7 +9,7 @@ app.use( bodyParser.json() );
 app.use(express.static('public'));
 
 app.get('/api', (request, response) => {
-    response.send('Hello from Express!')
+    response.send(database);
 });
 
 // Post new data. 
