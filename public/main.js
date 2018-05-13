@@ -59,7 +59,7 @@ var app = new Vue({
         totalMinutes: 0
     },
     created: function () {
-        // this.reloadData();
+        this.reloadData();
     },
     methods: {
         onSubmit: function() {
@@ -77,6 +77,9 @@ var app = new Vue({
             var self = this;
             axios.get('/api/')
             .then(function (db) {
+                // May be done by a database?
+                console.log(JSON.stringify(db.data));
+
                 data.datasets[0].data = [];
                 self.totalMinutes = 0;
                 for (var i = 0; i < db.data.length; i++) {
