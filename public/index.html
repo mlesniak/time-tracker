@@ -20,11 +20,11 @@
                 </div>
             </div>
             <div class="form-row">
-                <div class="col-md-4">
-                    <label for="formAtrolRange">Study time {{ parsed(duration) }}h</label>
+                <div class="form-group col-md-2">
+                    <div class="duration">{{ parsed(duration) }}h</div>
                 </div>
-                <div class="col-md-8">
-                    <input type="range" v-model.number="duration" class="form-Adtrol-range" min="1" max="180" value=15 step="1">
+                <div class="form-group col-md-10">
+                    <input type="range" v-model.number="duration" class="form-control" min="5" max="180" value=15 step="5">
                 </div>
             </div>
             <button type="submit" class="btn btn-primary">Submit</button>
