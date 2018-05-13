@@ -39,5 +39,10 @@ var app = new Vue({
     data: {
         description: undefined,
         duration: 10
+    },
+    methods: {
+        onSubmit: function() {
+            console.log("Submitting <" + this.description + " / " + this.duration + ">");
+        }
     }
 })

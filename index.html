@@ -19,18 +19,18 @@
     </nav>
     
     <div class="container" id="app">
-        <form>
+        <form v-on:submit.prevent="onSubmit">
             <div class="form-row">
                 <div class="col">
-                    <input v-model="description" type="text" class="form-control" placeholder="Description">
+                    <input v-model.trim="description" type="text" class="form-control" placeholder="Description" autofocus="autofocus">
                 </div>
             </div>
             <div class="form-row">
                 <div class="col-md-4">
-                    <label for="formControlRange">Duration</label>
+                    <label for="formAtrolRange">Duration</label>
                 </div>
                 <div class="col-md-8">
-                    <input type="range" v-model="duration" class="form-Adtrol-range" min="1" max="180" value=15 step="1">
+                    <input type="range" v-model.number="duration" class="form-Adtrol-range" min="1" max="180" value=15 step="1">
                 </div>
             </div>
             <button type="submit" class="btn btn-primary">Submit</button>
@@ -41,9 +41,6 @@
         <div class="text-center font-weight-bold large">21:30 hours studied!</p>
             <canvas id="canvas"></canvas> 
         </div>
-        
-        <hr/>
-        {{ description }} / {{ duration }}
     </div>
 </body>
 
