@@ -1,10 +1,17 @@
 var data = {
-    labels: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'],
+    labels: ['-6', '-5', '-4', '-3', '-2', 'Yesterday', 'Today'],
     datasets: [{
         backgroundColor: "#00AA00",
         borderColor: "#eeeeee",
         borderWidth: 1,
         data: [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
         ]
     }]
 };
@@ -23,6 +30,14 @@ window.onload = function() {
             legend: {
                 display: false,
             },
+            scales: {
+                xAxes: [{
+                    stacked: true,
+                }],
+                yAxes: [{
+                    stacked: true
+                }]
+            }
         }
     });
 };
@@ -57,7 +72,7 @@ var app = new Vue({
                 self.totalMinutes = 0;
                 for (var i = 0; i < db.data.length; i++) {
                     var entry = db.data[i];
-                    data.datasets[0].data.push(entry.duration);
+                    data.datasets[0].data[6 - i] = entry.duration;
                     self.totalMinutes += entry.duration;
                 }
                 window.chart.update();
