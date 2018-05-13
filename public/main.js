@@ -5,13 +5,6 @@ var data = {
         borderColor: "#eeeeee",
         borderWidth: 1,
         data: [
-            200,
-            120,
-            80,
-            120,
-            10,
-            15,
-            60
         ]
     }]
 };
@@ -38,20 +31,37 @@ var app = new Vue({
     el: '#app',
     data: {
         description: undefined,
-        duration: 10
+        duration: 10,
+        totalMinutes: 0
+    },
+    created: function () {
+        this.reloadData();
     },
     methods: {
         onSubmit: function() {
-            console.log("Submitting <" + this.description + " / " + this.duration + ">");
             var self = this;
             axios.post('/api/', {
                 description: this.description,
                 duration: this.duration
             }).then(function (response) {
-                console.log('Submitted');
                 self.description = '';
+                self.reloadData();
             });
             
+        },
+        reloadData: function() {
+            var self = this;
+            axios.get('/api/')
+            .then(function (db) {
+                data.datasets[0].data = [];
+                self.totalMinutes = 0;
+                for (var i = 0; i < db.data.length; i++) {
+                    var entry = db.data[i];
+                    data.datasets[0].data.push(entry.duration);
+                    self.totalMinutes += entry.duration;
+                }
+                window.chart.update();
+            });
         }
     }
 })
