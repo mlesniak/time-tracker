@@ -6,7 +6,7 @@
 const express = require('express')
 const bodyParser = require('body-parser')
 var Database = require('better-sqlite3');
-var db = new Database('./data.sqlite3');
+var db = new Database('./data/data.sqlite3');
 const app = express()
 const port = 3000
 
