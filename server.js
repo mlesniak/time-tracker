@@ -16,15 +16,23 @@ db.exec(`CREATE TABLE IF NOT EXISTS times
 
 app.get('/api', (request, response) => {
     var result = db.prepare(`select 
-    description, 
     sum(duration) as duration, 
     strftime('%d-%m-%Y',timestamp) as date
-    from times group by date, description order by date desc`).all();
+    from times group by date order by date desc limit 7`).all();
     response.send(result);
 });
 
-// Post new data. 
+// app.get('/api/full', (request, response) => {
+//     var result = db.prepare(`select 
+//     description,
+//     sum(duration) as duration, 
+//     strftime('%d-%m-%Y',timestamp) as date
+//     from times group by description, date order by date desc limit 7`).all();
+//     response.send(result);
+// });
+
 app.post('/api', (request, response) => {
+    var data = request.body;
     console.log("'Saving' " + JSON.stringify(data));
     var stmt = db.prepare("INSERT INTO times (description, duration) VALUES (?, ?)");
     stmt.run(data.description, data.duration);
@@ -33,7 +41,7 @@ app.post('/api', (request, response) => {
 
 app.listen(port, (err) => {
     if (err) {
-        return console.log('something bad happened', err)
+        return console.log('Error starting server', err)
     }
     console.log(`Server is listening on ${port}`)
 });

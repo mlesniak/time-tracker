@@ -1,7 +1,6 @@
 var data = {
-    labels: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'],
+    labels: ['-6', '-5', '-4', '-3', '-2', 'Yesterday', 'Today'],
     datasets: [{
-        label: 'BWL',
         backgroundColor: "#00AA00",
         borderColor: "#eeeeee",
         borderWidth: 1,
@@ -10,19 +9,7 @@ var data = {
             20,
             0
         ]
-    },
-    {
-        label: 'Hausarbeit',
-        backgroundColor: "#990000",
-        borderColor: "#eeeeee",
-        borderWidth: 1,
-        data: [
-            30,
-            20,
-            90
-        ]
-    }    
-]
+    }]
 };
 
 window.onload = function() {
@@ -79,7 +66,7 @@ var app = new Vue({
             .then(function (db) {
                 // May be done by a database?
                 console.log(JSON.stringify(db.data));
-
+                
                 data.datasets[0].data = [];
                 self.totalMinutes = 0;
                 for (var i = 0; i < db.data.length; i++) {
