@@ -27,7 +27,7 @@
             </div>
             <div class="form-row">
                 <div class="col-md-4">
-                    <label for="formAtrolRange">Duration</label>
+                    <label for="formAtrolRange">Study time {{ parsed(duration) }}h</label>
                 </div>
                 <div class="col-md-8">
                     <input type="range" v-model.number="duration" class="form-Adtrol-range" min="1" max="180" value=15 step="1">
@@ -38,7 +38,7 @@
         
         <hr/>
         
-        <div class="text-center font-weight-bold large">{{ totalMinutes}} minutes studied!</p>
+        <div class="text-center font-weight-bold large">{{ parsed(totalMinutes)}} hours!</p>
             <canvas id="canvas"></canvas> 
         </div>
     </div>

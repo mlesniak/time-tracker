@@ -77,6 +77,15 @@ var app = new Vue({
                 }
                 window.chart.update();
             });
+        },
+        parsed: function(d) {
+            var hours = Math.floor(d / 60);
+            var minutes = d % 60;
+            var prefix = "";
+            if (minutes < 10) {
+                prefix = "0";
+            }
+            return hours + ":" + prefix + minutes;
         }
     }
 })
