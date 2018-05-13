@@ -28,4 +28,9 @@ app.listen(port, (err) => {
 function save(data) {
     data.timestamp = new Date();
     console.log("'Saving' " + JSON.stringify(data));
+    database.push(data);
+    console.log(JSON.stringify(database));
 }
+
+// Contains all persisted data.
+var database = [];
