@@ -5,8 +5,12 @@ var data = {
         borderColor: "#eeeeee",
         borderWidth: 1,
         data: [
-            10,
-            20,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
             0
         ]
     }]
@@ -71,7 +75,7 @@ var app = new Vue({
                 self.totalMinutes = 0;
                 for (var i = 0; i < db.data.length; i++) {
                     var entry = db.data[i];
-                    data.datasets[0].data.push(entry.duration);
+                    data.datasets[0].data[6 - i] = entry.duration;
                     self.totalMinutes += entry.duration;
                 }
                 window.chart.update();
