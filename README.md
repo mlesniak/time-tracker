@@ -5,4 +5,4 @@
 
 ## Run
 
-    docker run -it --rm -v $(pwd)/data:/app/data -p 8000:3000 time-tracker
+    docker run -d -v $(pwd)/data:/app/data -p 8000:3000 time-tracker
