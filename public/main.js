@@ -48,7 +48,9 @@ var app = new Vue({
         description: undefined,
         duration: 10,
         totalMinutes: 0,
-        config: {}
+        config: {
+            steps: {}
+        }
     },
     created: function () {
         this.reloadData();
@@ -60,6 +62,7 @@ var app = new Vue({
             axios.get('/api/config')
             .then(function (config) {
                 self.config = config.data;
+                self.duration = self.config.steps.value;
             });
         }, 
         onSubmit: function() {

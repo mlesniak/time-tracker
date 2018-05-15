@@ -13,3 +13,7 @@ body {
 .duration {
     font-size: 18px;
 }
+
+[vcloak] > * { 
+    display: none; 
+}
