@@ -6,5 +6,6 @@
         "size": 5,
         "value": 30,
         "class": "watermelon"
-    }
+    },
+    "goalDate": "2018-06-16T10:00:00.000+01:00"
 }

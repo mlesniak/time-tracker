@@ -52,6 +52,17 @@ var app = new Vue({
             steps: {}
         }
     },
+    computed: {
+        differenceToGoal: function() {
+            if (!this.config.goalDate) {
+                return undefined;
+            }
+            var now = new Date().getTime();
+            var future = new Date(this.config.goalDate).getTime();
+            var diff = dhm(future - now);
+            return diff[0] + " days and " + diff[1] + " hours left";
+        }
+    },
     created: function () {
         this.reloadData();
         this.loadConfiguration();
@@ -102,3 +113,26 @@ var app = new Vue({
         }
     }
 })
+
+/**
+ * Convert milliseconds to difference in days, hours and minutes.
+ * 
+ * Found at https://stackoverflow.com/questions/8528382/javascript-show-milliseconds-as-dayshoursmins-without-seconds
+ */
+function dhm(t){
+    var cd = 24 * 60 * 60 * 1000,
+    ch = 60 * 60 * 1000,
+    d = Math.floor(t / cd),
+    h = Math.floor( (t - d * cd) / ch),
+    m = Math.round( (t - d * cd - h * ch) / 60000),
+    pad = function(n){ return n < 10 ? '0' + n : n; };
+    if( m === 60 ){
+        h++;
+        m = 0;
+    }
+    if( h === 24 ){
+        d++;
+        h = 0;
+    }
+    return [d, pad(h), pad(m)];
+}
