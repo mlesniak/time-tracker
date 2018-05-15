@@ -19,7 +19,7 @@ body {
 }
 
 /* Dynamic slider images */
-.slider::-webkit-slider-thumb {
+.watermelon::-webkit-slider-thumb {
     -webkit-appearance: none;
     appearance: none;
     width: 32px;
@@ -28,7 +28,7 @@ body {
     background: url('images/watermelon.png');
     cursor: pointer;
 }
-.slider::-moz-range-thumb {
+.watermelon::-moz-range-thumb {
     width: 32px;
     height: 32px;
     border: 0;

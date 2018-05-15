@@ -23,7 +23,9 @@
                     <div class="duration">{{ parsed(duration) }}h</div>
                 </div>
                 <div class="form-group col-md-10">
-                    <input type="range" v-model.number="duration" class="form-control slider" 
+                    <input type="range" v-model.number="duration" 
+                    class="form-control" 
+                    v-bind:class="[config.steps.class]"
                     :min= "config.steps.min"
                     :max= "config.steps.max" 
                     :step="config.steps.size">
