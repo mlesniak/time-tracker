@@ -68,11 +68,14 @@ var app = new Vue({
             var self = this;
             axios.get('/api/')
             .then(function (db) {
+                
+
                 data.datasets[0].data = [];
                 self.totalMinutes = 0;
                 for (var i = 0; i < db.data.length; i++) {
                     var entry = db.data[i];
-                    data.datasets[0].data[6 - i] = entry.duration;
+                    data.datasets[0].data[i] = entry.duration;
+                    data.labels[i] = entry.date;
                     self.totalMinutes += entry.duration;
                 }
                 window.chart.update();

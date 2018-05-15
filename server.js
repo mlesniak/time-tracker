@@ -13,14 +13,30 @@ const port = 3000
 app.use( bodyParser.json() );  
 app.use(express.static('public'));
 
-db.exec(`CREATE TABLE IF NOT EXISTS times 
+//     select 
+//     sum(times.duration) as duration, 
+//     strftime('%d-%m-%Y',times.timestamp) as date
+//     from times 
+//     join days on  times.time
+//     group by date order by date desc limit 7
+
+
+// TODO ML Read from file.
+db.exec(`
+CREATE TABLE IF NOT EXISTS times 
 (id INTEGER PRIMARY KEY AUTOINCREMENT, description TEXT, duration INTEGER, timestamp DATETIME DEFAULT CURRENT_TIMESTAMP);`);
+db.exec(`
+DROP table days;
+CREATE TABLE days (id INT);
+INSERT INTO days VALUES (0), (-1), (-2), (-3), (-4), (-5), (-6);
+`);
 
 app.get('/api', (request, response) => {
-    var result = db.prepare(`select 
-    sum(duration) as duration, 
-    strftime('%d-%m-%Y',timestamp) as date
-    from times group by date order by date desc limit 7`).all();
+    var result = db.prepare(`
+    SELECT days.date AS date, IFNULL(SUM(times.duration),0) AS duration
+    FROM (SELECT strftime('%d-%m-%Y', date('now', days.id || ' days')) AS date FROM days ORDER BY date ASC) days
+    LEFT JOIN times ON days.date = strftime('%d-%m-%Y', date(times.timestamp))
+    GROUP BY days.date`).all();
     response.send(result);
 });
 
