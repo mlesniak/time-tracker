@@ -13,14 +13,6 @@ const port = 3000
 app.use( bodyParser.json() );  
 app.use(express.static('public'));
 
-//     select 
-//     sum(times.duration) as duration, 
-//     strftime('%d-%m-%Y',times.timestamp) as date
-//     from times 
-//     join days on  times.time
-//     group by date order by date desc limit 7
-
-
 // TODO ML Read from file.
 db.exec(`
 CREATE TABLE IF NOT EXISTS times 
@@ -54,6 +46,12 @@ app.post('/api', (request, response) => {
     stmt.run(data.description, data.duration);
     response.send("OK");
 });
+
+app.get('/api/config', (request, response) => {
+    
+    response.send(result);
+});
+
 
 app.listen(port, (err) => {
     if (err) {
