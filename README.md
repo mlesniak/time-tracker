@@ -1,4 +1,8 @@
 
+## Redeploy
+
+    ssh root@$IP ./redeploy.sh
+
 ## Create docker container
 
     docker build -t time-tracker:latest .    
