@@ -17,3 +17,21 @@ body {
 [vcloak] > * { 
     display: none; 
 }
+
+/* Dynamic slider images */
+.slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 32px;
+    height: 32px;
+    border: 0;
+    background: url('images/watermelon.png');
+    cursor: pointer;
+}
+.slider::-moz-range-thumb {
+    width: 32px;
+    height: 32px;
+    border: 0;
+    background: url('images/watermelon.png');
+    cursor: pointer;
+}
