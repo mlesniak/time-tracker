@@ -7,6 +7,7 @@ const express = require('express')
 const bodyParser = require('body-parser')
 var Database = require('better-sqlite3');
 var db = new Database('./data/data.sqlite3');
+var fs = require('fs');
 const app = express()
 const port = 3000
 
@@ -48,8 +49,9 @@ app.post('/api', (request, response) => {
 });
 
 app.get('/api/config', (request, response) => {
-    
-    response.send(result);
+    var contents = fs.readFileSync('data/config.js').toString();
+    response.setHeader("Content-Type", "application/json");
+    response.send(contents);
 });
 
 
