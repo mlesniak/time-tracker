@@ -47,12 +47,21 @@ var app = new Vue({
     data: {
         description: undefined,
         duration: 10,
-        totalMinutes: 0
+        totalMinutes: 0,
+        config: {}
     },
     created: function () {
         this.reloadData();
+        this.loadConfiguration();
     },
     methods: {
+        loadConfiguration: function() {
+            var self = this;
+            axios.get('/api/config')
+            .then(function (config) {
+                self.config = config.data;
+            });
+        }, 
         onSubmit: function() {
             var self = this;
             axios.post('/api/', {
@@ -68,8 +77,6 @@ var app = new Vue({
             var self = this;
             axios.get('/api/')
             .then(function (db) {
-                
-
                 data.datasets[0].data = [];
                 self.totalMinutes = 0;
                 for (var i = 0; i < db.data.length; i++) {
