@@ -26,7 +26,7 @@ db.exec(`
 CREATE TABLE IF NOT EXISTS times 
 (id INTEGER PRIMARY KEY AUTOINCREMENT, description TEXT, duration INTEGER, timestamp DATETIME DEFAULT CURRENT_TIMESTAMP);`);
 db.exec(`
-DROP table days;
+DROP TABLE IF EXISTS days;
 CREATE TABLE days (id INT);
 INSERT INTO days VALUES (0), (-1), (-2), (-3), (-4), (-5), (-6);
 `);
