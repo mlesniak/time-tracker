@@ -37,10 +37,23 @@ window.onload = function() {
                 yAxes: [{
                     stacked: true
                 }]
+            },
+            events: ['click'],
+            onClick: function(event, elements) {
+                var label = elements[0]._model.label;
+                // Yup, hardcoded.
+                var key = label + "-2018";
+                var self = app;
+                axios.get('/api/' + key)
+                .then(function (day) {
+                    self.dayEntries = day.data;
+                });
+                
             }
         }
     });
 };
+
 
 var app = new Vue({
     el: '#app',
@@ -50,7 +63,8 @@ var app = new Vue({
         totalMinutes: 0,
         config: {
             steps: {}
-        }
+        },
+        dayEntries: undefined
     },
     computed: {
         differenceToGoal: function() {
@@ -116,10 +130,10 @@ var app = new Vue({
 })
 
 /**
- * Convert milliseconds to difference in days, hours and minutes.
- * 
- * Found at https://stackoverflow.com/questions/8528382/javascript-show-milliseconds-as-dayshoursmins-without-seconds
- */
+* Convert milliseconds to difference in days, hours and minutes.
+* 
+* Found at https://stackoverflow.com/questions/8528382/javascript-show-milliseconds-as-dayshoursmins-without-seconds
+*/
 function dhm(t){
     var cd = 24 * 60 * 60 * 1000,
     ch = 60 * 60 * 1000,

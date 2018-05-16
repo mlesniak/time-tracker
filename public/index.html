@@ -40,6 +40,9 @@
         <div class="text-center font-weight-bold large">{{ parsed(totalMinutes)}} hours!</p>
             <canvas id="canvas"></canvas> 
         </div>
+        <div v-if="dayEntries">
+            {{ dayEntries }}
+        </div>
     </div>
 </div></body>
 
