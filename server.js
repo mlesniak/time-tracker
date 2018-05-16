@@ -33,6 +33,12 @@ app.get('/api', (request, response) => {
     response.send(result);
 });
 
+app.get('/api/config', (request, response) => {
+    var contents = fs.readFileSync('data/config.js').toString();
+    response.setHeader("Content-Type", "application/json");
+    response.send(contents);
+});
+
 app.get('/api/:date', (request, response) => {
     var date = request.params.date;
     var stmt = db.prepare(`
@@ -56,13 +62,6 @@ app.post('/api', (request, response) => {
     stmt.run(data.description, data.duration);
     response.send("OK");
 });
-
-app.get('/api/config', (request, response) => {
-    var contents = fs.readFileSync('data/config.js').toString();
-    response.setHeader("Content-Type", "application/json");
-    response.send(contents);
-});
-
 
 app.listen(port, (err) => {
     if (err) {
