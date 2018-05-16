@@ -46,11 +46,13 @@
                     <tr>
                         <th>Description</th>
                         <th>Duration</th>
+                        <th>Time</th>
                     </tr>
                 </thead>
                 <tr v-for="day in dayEntries">
                     <td>{{day.description}}</td>
                     <td>{{parsed(day.duration)}}</td>
+                    <td>{{day.timestamp}}</td>
                 </tr>
             </table>
         </div>
