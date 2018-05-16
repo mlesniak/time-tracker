@@ -44,7 +44,7 @@ app.get('/api/:date', (request, response) => {
     var stmt = db.prepare(`
     SELECT * FROM times
     WHERE strftime('%d-%m-%Y', timestamp) = ?
-    ODER BY TIMESTAMP ASC`);
+    ORDER BY TIMESTAMP ASC`);
     var result = stmt.all(date);
     response.send(result);
 });
