@@ -48,7 +48,6 @@ window.onload = function() {
                 .then(function (day) {
                     self.dayEntries = day.data;
                 });
-                
             }
         }
     });

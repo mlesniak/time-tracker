@@ -41,7 +41,18 @@
             <canvas id="canvas"></canvas> 
         </div>
         <div v-if="dayEntries">
-            {{ dayEntries }}
+            <table class="table">
+                <thead v-on:click="dayEntries = undefined">
+                    <tr>
+                        <th>Description</th>
+                        <th>Duration</th>
+                    </tr>
+                </thead>
+                <tr v-for="day in dayEntries">
+                    <td>{{day.description}}</td>
+                    <td>{{parsed(day.duration)}}</td>
+                </tr>
+            </table>
         </div>
     </div>
 </div></body>
