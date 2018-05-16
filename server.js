@@ -33,6 +33,15 @@ app.get('/api', (request, response) => {
     response.send(result);
 });
 
+app.get('/api/:date', (request, response) => {
+    var date = request.params.date;
+    var stmt = db.prepare(`
+    SELECT * FROM times
+    WHERE strftime('%d-%m-%Y', timestamp) = ?`);
+    var result = stmt.all(date);
+    response.send(result);
+});
+
 app.get('/api/full', (request, response) => {
     var result = db.prepare(`select 
     description, duration, timestamp 
