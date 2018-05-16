@@ -49,7 +49,7 @@
                         <th>Time</th>
                     </tr>
                 </thead>
-                <tr v-for="day in dayEntries">
+                <tr v-for="day in dayEntries" :key="day.id">
                     <td>{{day.description}}</td>
                     <td>{{parsed(day.duration)}}</td>
                     <td>{{day.timestamp}}</td>
