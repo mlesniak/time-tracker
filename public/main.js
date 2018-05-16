@@ -96,7 +96,8 @@ var app = new Vue({
                 for (var i = 0; i < db.data.length; i++) {
                     var entry = db.data[i];
                     data.datasets[0].data[i] = entry.duration;
-                    data.labels[i] = entry.date;
+                    // Remove year in label.
+                    data.labels[i] = entry.date.substring(0,5);
                     self.totalMinutes += entry.duration;
                 }
                 window.chart.update();
