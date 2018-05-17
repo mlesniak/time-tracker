@@ -25,11 +25,17 @@ INSERT INTO days VALUES (0), (-1), (-2), (-3), (-4), (-5), (-6);
 `);
 
 app.get('/api', (request, response) => {
+    // ?today=
+    var today = request.query.today;
+    if (!today) {
+        today =  'now';
+    }
+
     var result = db.prepare(`
     SELECT days.date AS date, IFNULL(SUM(times.duration),0) AS duration
-    FROM (SELECT strftime('%d-%m-%Y', date('now', days.id || ' days')) AS date FROM days ORDER BY date ASC) days
+    FROM (SELECT strftime('%d-%m-%Y', date(?, days.id || ' days')) AS date FROM days ORDER BY date ASC) days
     LEFT JOIN times ON days.date = strftime('%d-%m-%Y', date(times.timestamp))
-    GROUP BY days.date`).all();
+    GROUP BY days.date`).all(today);
     response.send(result);
 });
 
