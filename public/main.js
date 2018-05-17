@@ -64,7 +64,7 @@ var app = new Vue({
             steps: {}
         },
         dayEntries: undefined,
-        today 
+        today: undefined
     },
     computed: {
         differenceToGoal: function() {
@@ -88,6 +88,7 @@ var app = new Vue({
             .then(function (config) {
                 self.config = config.data;
                 self.duration = self.config.steps.value;
+                self.computeToday();
             });
         }, 
         onSubmit: function() {
@@ -100,6 +101,13 @@ var app = new Vue({
                 self.reloadData();
             });
             
+        },
+        computeToday: function() {
+            if (!this.config.weekStart) {
+                this.today = formatDate(new Date());
+                return;
+            } 
+            this.today = findEndOfWeek(this.config.weekStart);
         },
         reloadData: function() {
             var self = this;
@@ -170,5 +178,5 @@ function findEndOfWeek(startDate) {
 }
 
 function formatDate(date) {
-    [date.getFullYear(), pad(date.getMonth()), pad(date.getDate())].join('-')
+    return [date.getFullYear(), pad(date.getMonth()), pad(date.getDate())].join('-')
 }
