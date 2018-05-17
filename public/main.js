@@ -63,7 +63,8 @@ var app = new Vue({
         config: {
             steps: {}
         },
-        dayEntries: undefined
+        dayEntries: undefined,
+        today 
     },
     computed: {
         differenceToGoal: function() {
@@ -138,8 +139,7 @@ function dhm(t){
     ch = 60 * 60 * 1000,
     d = Math.floor(t / cd),
     h = Math.floor( (t - d * cd) / ch),
-    m = Math.round( (t - d * cd - h * ch) / 60000),
-    pad = function(n){ return n < 10 ? '0' + n : n; };
+    m = Math.round( (t - d * cd - h * ch) / 60000);
     if( m === 60 ){
         h++;
         m = 0;
@@ -149,4 +149,26 @@ function dhm(t){
         h = 0;
     }
     return [d, pad(h), pad(m)];
+}
+
+function pad (n){ 
+    return n < 10 ? '0' + n : n; 
+};
+
+function findEndOfWeek(startDate) {
+    var d = new Date(startDate).getTime();
+    
+    var dayMs = 1000 * 60 * 60 * 24;
+    var weekMs = dayMs * 7;
+    var now = new Date().getTime();
+    var date = d;
+    do {
+        date += weekMs;
+    } while (date < now);
+    var futureDate = new Date(date - dayMs);
+    return formatDate(futureDate);
+}
+
+function formatDate(date) {
+    [date.getFullYear(), pad(date.getMonth()), pad(date.getDate())].join('-')
 }
