@@ -78,17 +78,20 @@ var app = new Vue({
         }
     },
     created: function () {
-        this.reloadData();
-        this.loadConfiguration();
+        var self = this;
+        this.loadConfiguration(function () {
+            self.computeToday();
+            self.reloadData();
+        });
     },
     methods: {
-        loadConfiguration: function() {
+        loadConfiguration: function(afterLoading) {
             var self = this;
             axios.get('/api/config')
             .then(function (config) {
                 self.config = config.data;
                 self.duration = self.config.steps.value;
-                self.computeToday();
+                afterLoading();
             });
         }, 
         onSubmit: function() {
@@ -111,7 +114,11 @@ var app = new Vue({
         },
         reloadData: function() {
             var self = this;
-            axios.get('/api/')
+            var computedToday = '';
+            if (this.today) {
+                computedToday = '?today=' + this.today;
+            }
+            axios.get('/api/' + computedToday)
             .then(function (db) {
                 data.datasets[0].data = [];
                 self.totalMinutes = 0;
@@ -137,6 +144,7 @@ var app = new Vue({
     }
 })
 
+// TODO ML Utils.
 /**
 * Convert milliseconds to difference in days, hours and minutes.
 * 
@@ -165,7 +173,6 @@ function pad (n){
 
 function findEndOfWeek(startDate) {
     var d = new Date(startDate).getTime();
-    
     var dayMs = 1000 * 60 * 60 * 24;
     var weekMs = dayMs * 7;
     var now = new Date().getTime();
@@ -178,5 +185,5 @@ function findEndOfWeek(startDate) {
 }
 
 function formatDate(date) {
-    return [date.getFullYear(), pad(date.getMonth()), pad(date.getDate())].join('-')
+    return [date.getFullYear(), pad(date.getMonth() + 1), pad(date.getDate())].join('-')
 }

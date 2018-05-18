@@ -25,7 +25,7 @@ INSERT INTO days VALUES (0), (-1), (-2), (-3), (-4), (-5), (-6);
 `);
 
 app.get('/api', (request, response) => {
-    // ?today=
+    // Call pattern ...?today=
     var today = request.query.today;
     if (!today) {
         today =  'now';
