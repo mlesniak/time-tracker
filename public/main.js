@@ -29,6 +29,9 @@ window.onload = function() {
         data: data,
         options: {
             responsive: true,
+            tooltips: {
+                enabled: false
+            },
             title: {
                 display: false,
                 text: 'Your last week'
