@@ -16,6 +16,12 @@ var data = {
     }]
 };
 
+// var MyScale = Chart.Scale.extend({
+   
+// });
+
+// Chart.scaleService.registerScaleType('hourScale', MyScale, defaultConfigObject);
+
 window.onload = function() {
     var ctx = document.getElementById('canvas').getContext('2d');
     window.chart = new Chart(ctx, {
@@ -35,7 +41,12 @@ window.onload = function() {
                     stacked: true,
                 }],
                 yAxes: [{
-                    stacked: true
+                    stacked: true,
+                    ticks: {
+                        callback: function(value, index, values) {
+                            return formatHour(value);
+                        }
+                    }
                 }]
             },
             events: ['click'],
@@ -133,18 +144,22 @@ var app = new Vue({
             });
         },
         parsed: function(d) {
-            var hours = Math.floor(d / 60);
-            var minutes = d % 60;
-            var prefix = "";
-            if (minutes < 10) {
-                prefix = "0";
-            }
-            return hours + ":" + prefix + minutes;
+            return formatHour(d);
         }
     }
 })
 
 // TODO ML Utils.
+function formatHour(d) {
+    var hours = Math.floor(d / 60);
+    var minutes = d % 60;
+    var prefix = "";
+    if (minutes < 10) {
+        prefix = "0";
+    }
+    return hours + ":" + prefix + minutes;
+}
+
 /**
 * Convert milliseconds to difference in days, hours and minutes.
 * 
