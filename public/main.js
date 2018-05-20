@@ -17,7 +17,7 @@ var data = {
 };
 
 // var MyScale = Chart.Scale.extend({
-   
+
 // });
 
 // Chart.scaleService.registerScaleType('hourScale', MyScale, defaultConfigObject);
@@ -69,8 +69,27 @@ window.onload = function() {
             }
         }
     });
+    
+    var options = {};
+    var hammertime = new Hammer(document.getElementById('canvas'));
+    hammertime.on('swipe', function(ev) {
+        if (Math.abs(ev.deltaX) < 100) {
+            return;
+        }
+        var factor = -1;
+        if (ev.deltaX > 0) {
+            factor = 1;
+        }
+        // TODO ML Refactor
+        var d = new Date(app.today).getTime();
+        var dayMs = 1000 * 60 * 60 * 24;
+        var weekMs = dayMs * 7;
+        app.today = formatDate(new Date(d - weekMs * factor));
+        console.log(app.today);
+        app.reloadData();
+    });
+    hammertime.get('swipe').set({ direction: Hammer.DIRECTION_HORIZONTAL });
 };
-
 
 var app = new Vue({
     el: '#app',
