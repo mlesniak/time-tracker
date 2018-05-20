@@ -54,6 +54,10 @@ window.onload = function() {
             },
             events: ['click'],
             onClick: function(event, elements) {
+                if (!elements[0]) {
+                    app.dayEntries = undefined;
+                    return;
+                }
                 var label = elements[0]._model.label;
                 // Yup, hardcoded.
                 var key = label + "-2018";
