@@ -73,7 +73,7 @@ window.onload = function() {
     var options = {};
     var hammertime = new Hammer(document.getElementById('canvas'));
     hammertime.on('swipe', function(ev) {
-        if (Math.abs(ev.deltaX) < 100) {
+        if (Math.abs(ev.deltaX) < 30) {
             return;
         }
         var factor = -1;
