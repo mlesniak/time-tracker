@@ -49,7 +49,7 @@ app.get('/api/:date', (request, response) => {
     var date = request.params.date;
     var stmt = db.prepare(`
     SELECT * FROM times
-    WHERE strftime('%d-%m-%Y', timestamp) = ?
+    WHERE strftime('%Y-%m-%d', timestamp) = ?
     ORDER BY TIMESTAMP ASC`);
     var result = stmt.all(date);
     response.send(result);

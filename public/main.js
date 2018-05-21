@@ -62,7 +62,7 @@ window.onload = function() {
                 }
                 var label = elements[0]._model.label;
                 // Yup, hardcoded.
-                var key = label + "-2018";
+                var key = data.dates[label];
                 var self = app;
                 axios.get('/api/' + key)
                 .then(function (day) {
@@ -153,6 +153,7 @@ var app = new Vue({
                 return;
             } 
             this.today = findEndOfWeek(this.config.weekStart);
+            console.log(this.today);
         },
         reloadData: function() {
             var self = this;
@@ -163,6 +164,7 @@ var app = new Vue({
             axios.get('/api/' + computedToday)
             .then(function (db) {
                 data.datasets[0].data = [];
+                data.dates = {};
                 self.totalMinutes = 0;
                 for (var i = 0; i < db.data.length; i++) {
                     var entry = db.data[i];
@@ -175,6 +177,7 @@ var app = new Vue({
                     } else {
                         data.labels[i] = self.weekday(t.getDay()); 
                     }
+                    data.dates[data.labels[i]] = entry.date;
                     self.totalMinutes += entry.duration;
                 }
                 window.chart.update();
