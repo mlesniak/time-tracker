@@ -16,13 +16,17 @@ var data = {
     }]
 };
 
-// var MyScale = Chart.Scale.extend({
-
-// });
-
-// Chart.scaleService.registerScaleType('hourScale', MyScale, defaultConfigObject);
-
-
+var goalData = {
+    labels: ['1'],
+    datasets: [{
+        backgroundColor: "#00AACC",
+        borderColor: "#eeeeee",
+        borderWidth: 1,
+        data: [
+            12
+        ]
+    }]
+};
 
 window.onload = function() {
     var ctx = document.getElementById('canvas').getContext('2d');
@@ -71,6 +75,8 @@ window.onload = function() {
             }
         }
     });
+    
+    
     
     var options = {};
     var hammertime = new Hammer(document.getElementById('canvas'));
@@ -121,6 +127,37 @@ var app = new Vue({
         this.loadConfiguration(function () {
             self.computeToday();
             self.reloadData();
+            
+            var g = document.getElementById('goal');
+            if (self.config.weekGoal)  {
+                g.style.display = "inline";
+                var gctx = g.getContext('2d');
+                window.goal = new Chart(gctx, {
+                    type: 'horizontalBar',
+                    data: goalData,
+                    options: {
+                        responsive: true,
+                        tooltips: {
+                            display: false,
+                            enabled: false
+                        },
+                        title: {
+                            display: false,
+                        },
+                        legend: {
+                            display: false,
+                        },
+                        scales: {
+                            xAxes: [{
+                                ticks: {
+                                    min: 0, 
+                                    max: self.config.weekGoal
+                                }
+                            }]
+                        }
+                    }
+                });
+            }
         });
     },
     methods: {
@@ -153,7 +190,6 @@ var app = new Vue({
                 return;
             } 
             this.today = findEndOfWeek(this.config.weekStart);
-            console.log(this.today);
         },
         reloadData: function() {
             var self = this;
@@ -180,8 +216,20 @@ var app = new Vue({
                     data.dates[data.labels[i]] = entry.date;
                     self.totalMinutes += entry.duration;
                 }
+                self.computeGoal();
                 window.chart.update();
             });
+        },
+        computeGoal: function() {
+            if (!this.config.weekGoal) {
+                return;
+            }
+            if (!window.goal.options) {
+                return;
+            }
+            window.goal.options.scales.xAxes[0].ticks.max = this.config.weekGoal;
+            goalData.datasets[0].data[0] = this.totalMinutes / 60;
+            window.goal.update();
         },
         parsed: function(d) {
             return formatHour(d);
