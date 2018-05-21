@@ -127,37 +127,7 @@ var app = new Vue({
         this.loadConfiguration(function () {
             self.computeToday();
             self.reloadData();
-            
-            var g = document.getElementById('goal');
-            if (self.config.weekGoal)  {
-                g.style.display = "inline";
-                var gctx = g.getContext('2d');
-                window.goal = new Chart(gctx, {
-                    type: 'horizontalBar',
-                    data: goalData,
-                    options: {
-                        responsive: true,
-                        tooltips: {
-                            display: false,
-                            enabled: false
-                        },
-                        title: {
-                            display: false,
-                        },
-                        legend: {
-                            display: false,
-                        },
-                        scales: {
-                            xAxes: [{
-                                ticks: {
-                                    min: 0, 
-                                    max: self.config.weekGoal
-                                }
-                            }]
-                        }
-                    }
-                });
-            }
+            self.goalChart();
         });
     },
     methods: {
@@ -233,6 +203,38 @@ var app = new Vue({
         },
         parsed: function(d) {
             return formatHour(d);
+        },
+        goalChart: function() {
+            var g = document.getElementById('goal');
+            if (this.config.weekGoal)  {
+                g.style.display = "inline";
+                var gctx = g.getContext('2d');
+                window.goal = new Chart(gctx, {
+                    type: 'horizontalBar',
+                    data: goalData,
+                    options: {
+                        responsive: true,
+                        tooltips: {
+                            display: false,
+                            enabled: false
+                        },
+                        title: {
+                            display: false,
+                        },
+                        legend: {
+                            display: false,
+                        },
+                        scales: {
+                            xAxes: [{
+                                ticks: {
+                                    min: 0, 
+                                    max: this.config.weekGoal
+                                }
+                            }]
+                        }
+                    }
+                });
+            }
         }
     }
 })
