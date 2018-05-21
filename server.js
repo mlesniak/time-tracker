@@ -30,11 +30,11 @@ app.get('/api', (request, response) => {
     if (!today) {
         today =  'now';
     }
-
+    
     var result = db.prepare(`
     SELECT days.date AS date, IFNULL(SUM(times.duration),0) AS duration
-    FROM (SELECT strftime('%d-%m-%Y', date(?, days.id || ' days')) AS date FROM days ORDER BY date ASC) days
-    LEFT JOIN times ON days.date = strftime('%d-%m-%Y', date(times.timestamp))
+    FROM (SELECT strftime('%Y-%m-%d', date(?, days.id || ' days')) AS date FROM days ORDER BY date ASC) days
+    LEFT JOIN times ON days.date = strftime('%Y-%m-%d', date(times.timestamp))
     GROUP BY days.date`).all(today);
     response.send(result);
 });

@@ -22,6 +22,8 @@ var data = {
 
 // Chart.scaleService.registerScaleType('hourScale', MyScale, defaultConfigObject);
 
+
+
 window.onload = function() {
     var ctx = document.getElementById('canvas').getContext('2d');
     window.chart = new Chart(ctx, {
@@ -97,10 +99,11 @@ var app = new Vue({
         duration: 10,
         totalMinutes: 0,
         config: {
-            steps: {}
+            steps: {},
+            useWeekdays: false
         },
         dayEntries: undefined,
-        today: undefined
+        today: undefined,
     },
     computed: {
         differenceToGoal: function() {
@@ -121,6 +124,9 @@ var app = new Vue({
         });
     },
     methods: {
+        weekday: function(i) { 
+            return ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'][i];
+        },
         loadConfiguration: function(afterLoading) {
             var self = this;
             axios.get('/api/config')
@@ -161,8 +167,14 @@ var app = new Vue({
                 for (var i = 0; i < db.data.length; i++) {
                     var entry = db.data[i];
                     data.datasets[0].data[i] = entry.duration;
-                    // Remove year in label.
-                    data.labels[i] = entry.date.substring(0,5);
+                    // TODO ML Bold for today
+                    var t = new Date(entry.date);
+                    if (!self.config.useWeekdays) {
+                        // Remove year in label.
+                        data.labels[i] = formatDay(t);
+                    } else {
+                        data.labels[i] = self.weekday(t.getDay()); 
+                    }
                     self.totalMinutes += entry.duration;
                 }
                 window.chart.update();
@@ -224,6 +236,11 @@ function findEndOfWeek(startDate) {
     return formatDate(futureDate);
 }
 
+// TODO ML Necessary anymore?
 function formatDate(date) {
     return [date.getFullYear(), pad(date.getMonth() + 1), pad(date.getDate())].join('-')
+}
+
+function formatDay(date) {
+    return [pad(date.getDate()), pad(date.getMonth() + 1)].join('-')
 }
