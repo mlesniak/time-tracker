@@ -76,8 +76,6 @@ window.onload = function() {
         }
     });
     
-    
-    
     var options = {};
     var hammertime = new Hammer(document.getElementById('canvas'));
     hammertime.on('swipe', function(ev) {
@@ -228,7 +226,10 @@ var app = new Vue({
                             xAxes: [{
                                 ticks: {
                                     min: 0, 
-                                    max: this.config.weekGoal
+                                    max: this.config.weekGoal,
+                                    callback: function(value, index, values) {
+                                        return formatHour(value * 60);
+                                    }
                                 }
                             }]
                         }
