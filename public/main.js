@@ -82,9 +82,13 @@ window.onload = function() {
         if (Math.abs(ev.deltaX) < 30) {
             return;
         }
-        var factor = -1;
+        var factor = 0;
         if (ev.deltaX > 0) {
             factor = 1;
+            app.previousCounter++;
+        } else {
+            factor = -1;
+            app.previousCounter--;
         }
         // TODO ML Refactor
         var d = new Date(app.today).getTime();
@@ -108,6 +112,8 @@ var app = new Vue({
         },
         dayEntries: undefined,
         today: undefined,
+        // Counts number of swipes in future or past.
+        previousCounter: 0
     },
     computed: {
         differenceToGoal: function() {
@@ -120,7 +126,7 @@ var app = new Vue({
             return diff[0] + " days and " + diff[1] + " hours left";
         },
         showReward: function() {
-            return this.totalMinutes >= this.config.weekGoal * 60;
+            return (this.totalMinutes >= this.config.weekGoal * 60) && (this.previousCounter == 0);
         }
     },
     created: function () {
