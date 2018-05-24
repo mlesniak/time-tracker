@@ -118,6 +118,9 @@ var app = new Vue({
             var future = new Date(this.config.goalDate).getTime();
             var diff = dhm(future - now);
             return diff[0] + " days and " + diff[1] + " hours left";
+        },
+        showReward: function() {
+            return this.totalMinutes >= this.config.weekGoal * 60;
         }
     },
     created: function () {

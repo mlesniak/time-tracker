@@ -8,7 +8,8 @@
         "class": "watermelon"
     },
     "goalDate": "2018-06-16T10:00:00.000+01:00",
-    "weekGoal": 12,
-    "weekStart": "2018-05-16",
-    "useWeekdays": true
+    "weekGoal": 8,
+    "weekStart": "2018-05-11",
+    "useWeekdays": true,
+    "reward": "COOL!"
 }
