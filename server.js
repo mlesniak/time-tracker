@@ -39,6 +39,23 @@ app.get('/api', (request, response) => {
     response.send(result);
 });
 
+// TODO ML Might be able to use this as the general endpoint?
+app.get('/api/detail', (request, response) => {
+    // Call pattern ...?today=
+    var today = request.query.today;
+    if (!today) {
+        today =  'now';
+    }
+    
+    var result = db.prepare(`
+    SELECT days.date AS date, times.description, IFNULL(SUM(times.duration),0) AS duration
+    FROM (SELECT strftime('%Y-%m-%d', date(?, days.id || ' days')) AS date FROM days ORDER BY date ASC) days
+    LEFT JOIN times ON days.date = strftime('%Y-%m-%d', date(times.timestamp))
+    GROUP BY days.date, times.description;`).all(today);
+    response.send(result);
+});
+
+
 app.get('/api/config', (request, response) => {
     var contents = fs.readFileSync('data/config.js').toString();
     response.setHeader("Content-Type", "application/json");
