@@ -174,24 +174,39 @@ var app = new Vue({
             if (this.today) {
                 computedToday = '?today=' + this.today;
             }
-            axios.get('/api/' + computedToday)
+            axios.get('/api/detail' + computedToday)
             .then(function (db) {
                 data.datasets[0].data = [];
                 data.dates = {};
                 self.totalMinutes = 0;
+                
+                // Compute sum per day.
+                var sums = {};
+                var days = [];
                 for (var i = 0; i < db.data.length; i++) {
                     var entry = db.data[i];
-                    data.datasets[0].data[i] = entry.duration;
-                    // TODO ML Bold for today
-                    var t = new Date(entry.date);
+                    if (!sums[entry.date]) {
+                        days.push(entry.date);
+                        sums[entry.date] = entry.duration;
+                    } else {
+                        sums[entry.date] += entry.duration;
+                    }
+                }
+                
+                for (var i = 0; i < days.length; i++) {
+                    var day = days[i];
+                    var duration = sums[day];
+                    
+                    data.datasets[0].data[i] = duration;
+                    var t = new Date(day);
                     if (!self.config.useWeekdays) {
                         // Remove year in label.
                         data.labels[i] = formatDay(t);
                     } else {
                         data.labels[i] = self.weekday(t.getDay()); 
                     }
-                    data.dates[data.labels[i]] = entry.date;
-                    self.totalMinutes += entry.duration;
+                    data.dates[data.labels[i]] = day;
+                    self.totalMinutes += duration;
                 }
                 self.computeGoal();
                 window.chart.update();
