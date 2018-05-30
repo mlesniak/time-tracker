@@ -83,7 +83,8 @@ app.post('/api', (request, response) => {
     var data = request.body;
     console.log("'Saving' " + JSON.stringify(data));
     var stmt = db.prepare("INSERT INTO times (description, duration) VALUES (?, ?)");
-    stmt.run(data.description, data.duration);
+    var processed = data.description.trim();
+    stmt.run(processed, data.duration);
     response.send("OK");
 });
 

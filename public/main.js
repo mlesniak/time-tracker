@@ -192,7 +192,27 @@ var app = new Vue({
                         sums[entry.date] += entry.duration;
                     }
                 }
-                
+
+                // console.log(JSON.stringify(db.data));
+                // // Compute sum per day per activity.
+                // var activityDayDuration = {};
+                // for (var i = 0; i < db.data.length; i++) {
+                //     var entry = db.data[i];
+                //     if (entry.duration === 0) {
+                //         continue;
+                //     }
+                //     if (!activityDayDuration[entry.description]) {
+                //         activityDayDuration[entry.description] = {};
+                //     }
+                //     activityDayDuration[entry.description][entry.date] = entry.duration;
+                // }
+                // console.log(JSON.stringify(activityDayDuration));
+
+                // // Dataset erstellen, 
+                // // dabei über days iterieren.
+
+
+                // Update to chart.
                 for (var i = 0; i < days.length; i++) {
                     var day = days[i];
                     var duration = sums[day];
